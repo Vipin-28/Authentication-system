@@ -9,7 +9,7 @@
     "npm": "8.x"
   },
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon server.js"
   },
   "author": "Vipin Kumar",
   "license": "ISC",
