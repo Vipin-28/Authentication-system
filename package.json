@@ -10,8 +10,6 @@
   },
   "scripts": {
     "dev": "nodemon server.js",
-    "build": "ng build",
-    "heroku-postbuild": "ng build --prod" 
   },
   "author": "Vipin Kumar",
   "license": "ISC",
