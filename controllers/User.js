@@ -6,7 +6,6 @@ import { sendToken } from "../utils/sendToken.js";
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body; 
-
     let user = await User.findOne({ email });//since email is unqiue 
 
     if (user) {// user already exists in our database
@@ -34,16 +33,20 @@ export const register = async (req, res) => {
       "OTP sent to your email, please verify your account"
     );
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    // 
+    res.status(500).json({ success: false, message: error.message});
   }
 };
 
 // verify route
 export const verify = async (req, res) => {
+  const { id, otp} = req.body;
+  //return res.status(200).json({success : true, message:req.body});
   try {
-    const otp = Number(req.body.otp);
-
-    const user = await User.findById(req.user._id);// only be accessed when already loged in
+    let { id, otp} = req.body; 
+    otp = Number(otp);
+    //console.log(req.body);
+    const user = await User.findById(id);// only be accessed when already logged in
 
     if (user.otp !== otp || user.otp_expiry < Date.now()) {
       return res
@@ -56,10 +59,10 @@ export const verify = async (req, res) => {
     user.otp_expiry = null;
 
     await user.save();
-
+    // cookies mei store karne ke liye sendToken
     sendToken(res, user, 200, "Account Verified");
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message});
   }
 };
 
@@ -114,7 +117,7 @@ export const logout = async (req, res) => {
 // getMyProfile (/me) route
 export const getMyProfile = async (req, res) => {
   try {
-    console.log(req.user);
+    // console.log(req.user);
     const user = await User.findById(req.user._id);
 
     sendToken(res, user, 201, `Welcome ${user.name} to your profile!!!`);

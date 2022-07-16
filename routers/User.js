@@ -11,23 +11,22 @@ import {
   verify,
 } from "../controllers/User.js";
 
-import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.route("/register").post(register);
 
-router.route("/verify").post(isAuthenticated, verify);
+router.route("/verify").post(verify);
 
 router.route("/login").post(login);
 router.route("/logout").get(logout);
 
-router.route("/me").get(isAuthenticated, getMyProfile);
+router.route("/me").get(getMyProfile);
 
 
  // since we are updating so put
-router.route("/updateprofile").put(isAuthenticated, updateProfile);
-router.route("/updatepassword").put(isAuthenticated, updatePassword);
+router.route("/updateprofile").put(updateProfile);
+router.route("/updatepassword").put(updatePassword);
 
 router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword").put(resetPassword);
