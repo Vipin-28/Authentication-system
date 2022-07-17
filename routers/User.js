@@ -2,6 +2,7 @@ import express from "express";
 import {
   forgetPassword,
   getMyProfile,
+  getTime,
   login,
   logout,
   register,
@@ -30,5 +31,7 @@ router.route("/updatepassword").put(updatePassword);
 
 router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword").put(resetPassword);
+
+router.route("/gettime").get(getTime);
 
 export default router;

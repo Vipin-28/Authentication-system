@@ -12,7 +12,11 @@ export const sendToken = (res, user, statusCode, message) => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    avatar: user.avatar,
+    rollno: user.rollno,
+    course: user.course,
+    year: user.year,
+    phno: user.phno,
+    gender: user.gender,
     verified: user.verified,
   };
 

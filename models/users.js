@@ -21,6 +21,29 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 
+  rollno:{
+    type:Number,
+    required: true,
+  },
+
+  course:{
+    type: String,
+    requried: true,
+  },
+
+  year:{
+    type: Number,
+    required: true,
+  },
+  phno:{
+    type: String,
+    required: true,
+  },
+
+  gender:{
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

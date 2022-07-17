@@ -5,7 +5,7 @@ import { sendToken } from "../utils/sendToken.js";
 // register route
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body; 
+    const { name, email, password, rollno, course, year, phno, gender} = req.body; 
     let user = await User.findOne({ email });//since email is unqiue 
 
     if (user) {// user already exists in our database
@@ -20,6 +20,7 @@ export const register = async (req, res) => {
       name,
       email,
       password,
+      rollno, course, year, phno, gender,
       otp,
       otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 1000),
     });
@@ -40,8 +41,6 @@ export const register = async (req, res) => {
 
 // verify route
 export const verify = async (req, res) => {
-  const { id, otp} = req.body;
-  //return res.status(200).json({success : true, message:req.body});
   try {
     let { id, otp} = req.body; 
     otp = Number(otp);
@@ -129,9 +128,13 @@ export const getMyProfile = async (req, res) => {
 //profile update route
 export const updateProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
-
-    const { name } = req.body;
+    const { name, id } = req.body;
+    if (!name) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please enter all fields" });
+    }
+    const user = await User.findById(id);
 
     if (name) user.name = name;
 
@@ -193,7 +196,7 @@ export const forgetPassword = async (req, res) => {
     const otp = Math.floor(Math.random() * 1000000);
 
     user.resetPasswordOtp = otp;
-    user.resetPasswordOtpExpiry = Date.now() + 10 * 60 * 1000;
+    user.resetPasswordOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 mins
 
     await user.save();
 
@@ -236,3 +239,16 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+export const getTime = async ( req, res) =>{
+    try{
+        const user = await User.findById(req.user._id);
+
+        const time = user.otp_expiry;
+        res.send(200).json({success:true, message: time});
+
+    }catch(err){
+        res.status(500).json({success: false, message: error.message});
+    }
+}
