@@ -128,15 +128,19 @@ export const getMyProfile = async (req, res) => {
 //profile update route
 export const updateProfile = async (req, res) => {
   try {
-    const { name, id } = req.body;
-    if (!name) {
+    const { name, id, year, phno} = req.body;
+    if (!name || !year || !phno) {
       return res
         .status(400)
         .json({ success: false, message: "Please enter all fields" });
     }
     const user = await User.findById(id);
 
-    if (name) user.name = name;
+    if (name){
+      user.name = name;
+      user.year = year;
+      user.phno = phno;
+    } 
 
     await user.save();//saving again after changes
 
@@ -148,39 +152,6 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-// update password route
-export const updatePassword = async (req, res) => {
-  try {
-    // seleting password since select field is false in schema
-    const user = await User.findById(req.user._id).select("+password");
-
-    const { oldPassword, newPassword } = req.body;
-    //haven't done the confirm confirm password thing
-    if (!oldPassword || !newPassword) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please enter all fields" });
-    }
-
-    const isMatch = await user.comparePassword(oldPassword);
-
-    if (!isMatch) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid Old Password" });
-    }
-
-    user.password = newPassword;
-
-    await user.save();
-
-    res
-      .status(200)
-      .json({ success: true, message: "Password Updated successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
 
 // forget password route
 export const forgetPassword = async (req, res) => {

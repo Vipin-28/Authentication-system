@@ -7,7 +7,6 @@ import {
   logout,
   register,
   resetPassword,
-  updatePassword,
   updateProfile,
   verify,
 } from "../controllers/User.js";
@@ -27,7 +26,6 @@ router.route("/me").get(getMyProfile);
 
  // since we are updating so put
 router.route("/updateprofile").put(updateProfile);
-router.route("/updatepassword").put(updatePassword);
 
 router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword").put(resetPassword);
