@@ -1,0 +1,45 @@
+.updateProfile{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: lightblue;
+    background-size: cover;
+  }
+  
+  .Title {
+    font-size: 25px;
+  }
+  
+  .Form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Form > label {
+    margin: 10px 0;
+  }
+  
+  .verifyInput {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .loginInput:focus {
+    outline: none;
+  }
+  
+  .updateButton {
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: lightcoral;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+  }
